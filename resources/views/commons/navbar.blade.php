@@ -12,7 +12,7 @@
             <ul class="navbar-nav">
                 @if (Auth::check())
                     {{-- アカウント情報ページへのリンク --}}
-                    <li class="nav-item"><a href="#" class="nav-link">{{ Auth::user()->name }}</a></li>
+                    <li class="nav-item">{!! link_to_route('users.show', Auth::user()->name, ['user' => Auth::id()]) !!}</li>
                 @else
                     {{-- ユーザ登録ページへのリンク --}}
                     <li class="nav-item">{!! link_to_route('signup.get', '登録', [], ['class' => 'nav-link']) !!}</li>
