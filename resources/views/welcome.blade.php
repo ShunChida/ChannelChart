@@ -3,6 +3,11 @@
 @section('content')
     @if (Auth::check())
         {{ Auth::user()->name }}
+        @if (null !== $youtube)
+            <p>true</p>
+        @else
+            <p>false</p>
+        @endif
     @else
     <div class="center jumbotron">
         <div class="text-center">

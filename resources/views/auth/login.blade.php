@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @csrf
     <div class="text-center">
         <h1>ログイン</h1>
     </div>
