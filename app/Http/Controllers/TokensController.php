@@ -10,28 +10,29 @@ class TokensController extends Controller
     protected $user;
     protected $token;
     protected $client;
+    protected $content;
     
     public function index()
     {
         // ログイン前トップページ
-        //if (! \Auth::check()) {
+        if (! \Auth::check()) {
             return view('welcome', $this->data);
-        /*}
+        }
         
         // ログイン後
         $this->set_parameters();
         
-        if (isset($this->token['access_token'])) {
+        if (null !== $this->token) {
             $this->client->setAccessToken($this->token['access_token']);
             
             $this->refresh();
-            $this->api();
+            $this->get_content();
             // ログイン後トップページ
             return view('welcome', $this->data);
         }
         
         $this->auth_code();
-        echo ' エラー：認証に失敗';*/
+        echo ' エラー：認証に失敗';
     }
     
     
@@ -39,6 +40,7 @@ class TokensController extends Controller
     {
         $this->user = \Auth::user();
         $this->token = $this->user->token;
+        $this->content = $this->user->content;
         
         require_once __DIR__.'/../../../vendor/autoload.php';
         
@@ -72,20 +74,56 @@ class TokensController extends Controller
     }
     
     
-    public function api()
+    public function get_content()
     {
+        if (null == $this->content) {
         // APIよりデータ取得
+        list($channels, $videos) = $this->set_content();
+        
+        } else {
+            if ($this->minutes_taken_after_update() >= 5) {
+                // 前回から5分以上経っていればAPI使用
+                list($channels, $videos) = $this->set_content();
+            } else {
+                // 5分未満ならDBより取得
+                $channels = $this->content['channels'];
+                $videos = $this->content['videos'];
+            }
+        }
+        
+        $this->data = [
+            'channels' => $channels,
+            'videos' => $videos,
+        ];
+        
+    }
+    
+    
+    public function set_content()
+    {
         $youtube = new \Google_Service_YouTube($this->client);
         
         $channels = $this->get_channels($youtube);
         $videos = $this->get_videos($youtube, $channels);
         
-        $this->data = [
-            'youtube' => $youtube,
+        $this->user->content()->updateOrCreate(
+            ['user_id' => $this->user->id],
+            ['user_id' => $this->user->id,
             'channels' => $channels,
-            'videos' => $videos,
-        ];
+            'videos' => $videos,]
+        );
         
+        return array($channels, $videos);
+    }
+    
+    
+    public function minutes_taken_after_update() // APIを使用してから経った分数を取得
+    {
+        $now = strtotime(date("Y/m/d H:i:s"));
+        $updated_at = strtotime($this->content['updated_at']);
+        $diff = $now - $updated_at;
+        $diff_m = $diff / 60;
+        return $diff_m;
     }
     
     

@@ -5,8 +5,8 @@
         <div class="text-center">
             <h1>すべてのチャンネル</h1>
         </div>
-        {{--@include('channels.channels')
-        @include('channels.videos')--}}
+        @include('channels.channels')
+        @include('channels.videos')
     @else
     <div class="center jumbotron">
         <div class="text-center">
