@@ -22,6 +22,6 @@ class UsersController extends Controller
         if (\Auth::id() === $user->id) {
             $user->delete();
         }
-        return redirect('/');
+        return redirect('/')->send();
     }
 }

@@ -20,7 +20,7 @@ class CreateTokensTable extends Migration
             $table->boolean('refresh_token_exists');
             $table->timestamps();
             
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

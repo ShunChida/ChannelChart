@@ -14,9 +14,9 @@ class TokensController extends Controller
     public function index()
     {
         // ログイン前トップページ
-        if (! \Auth::check()) {
+        //if (! \Auth::check()) {
             return view('welcome', $this->data);
-        }
+        /*}
         
         // ログイン後
         $this->set_parameters();
@@ -31,6 +31,7 @@ class TokensController extends Controller
         }
         
         $this->auth_code();
+        echo ' エラー：認証に失敗';*/
     }
     
     
@@ -66,7 +67,7 @@ class TokensController extends Controller
             $this->user->token()->update([
                 'access_token' => $access_token,
             ]);
-            return redirect('/');
+            return redirect('/')->send();
         }
     }
     
@@ -75,8 +76,14 @@ class TokensController extends Controller
     {
         // APIよりデータ取得
         $youtube = new \Google_Service_YouTube($this->client);
+        
+        $channels = $this->get_channels($youtube);
+        $videos = $this->get_videos($youtube, $channels);
+        
         $this->data = [
             'youtube' => $youtube,
+            'channels' => $channels,
+            'videos' => $videos,
         ];
         
     }
@@ -84,10 +91,10 @@ class TokensController extends Controller
     
     public function auth_code()
     {
-        // 認可コードがあるか
+        // 認証コードがあるか
         if (! isset($_GET['code'])) {
             $auth_url = $this->client->createAuthUrl();
-            return redirect($auth_url);
+            return \Redirect::to($auth_url)->send();
         }
         
         // アクセストークンとリフレッシュトークンを取得、データベースに保存
@@ -105,7 +112,68 @@ class TokensController extends Controller
             'access_token' => $access_token,
             'refresh_token_exists' => $refresh_token_exists,
         ]);
-        return redirect('/');
+        return redirect('/')->send();
     }
     
+    
+    public function get_channels($youtube)
+    {
+        // 登録チャンネルの取得
+        try {
+            $subsResponse = $youtube->subscriptions->listSubscriptions('snippet', array(
+                'mine' =>'true',   
+            ));
+        } catch (Google_Service_Exception $e) {
+            $htmlBody = sprintf('<p>A service error occurred: <code>%s</code></p>',
+            htmlspecialchars($e->getMessage()));
+        } catch (Google_Exception $e) {
+            $htmlBody = sprintf('<p>An client error occurred: <code>%s</code></p>',
+            htmlspecialchars($e->getMessage()));
+        }
+        foreach ($subsResponse['items'] as $subsResult) {
+            $channels[] = $subsResult;
+        }
+        return $channels;
+    }
+    
+    
+    public function get_videos($youtube, $channels)
+    {
+        // 登録チャンネルの動画取得
+        foreach ($channels as $channel) {
+            $params['channelId'] = $channel['snippet']['resourceId']['channelId'];
+            $params['type'] = 'video';
+            $params['maxResults'] = 10;
+            $params['order'] = 'date'; 
+            
+            try {
+                $searchResponse = $youtube->search->listSearch('snippet', $params);
+            } catch (Google_Service_Exception $e) {
+                $htmlBody = sprintf('<p>A service error occurred: <code>%s</code></p>',
+                htmlspecialchars($e->getMessage()));
+            } catch (Google_Exception $e) {
+                $htmlBody = sprintf('<p>An client error occurred: <code>%s</code></p>',
+                htmlspecialchars($e->getMessage()));
+            }
+            foreach ($searchResponse['items'] as $search_result) {
+                $videos[] = $search_result;
+            }
+        }
+        
+        $videos = $this->sort_by_publishedAt(SORT_DESC, $videos);
+        
+        return $videos;
+    }
+    
+    
+    public function sort_by_publishedAt($sort_order, $array) //投稿時間順に並べる
+    {
+        foreach ($array as $key => $value) {
+            $standard_key_array[$key] = $value['snippet']['publishedAt'];
+        }
+    
+        array_multisort($standard_key_array, $sort_order, $array);
+    
+        return $array;
+    }
 }
