@@ -12,7 +12,7 @@
                 メールアドレス：{{ $user->email }}
             </p>
             
-            <button type="button" class="btn btn-warning">{!! link_to_route('logout.get', 'ログアウト') !!}</button>
+            <button type="button" class="btn btn-warning btn-block">{!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'text-white text-decoration-none']) !!}</button>
             
             {{-- ポップアップ実装予定 --}}
             {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}

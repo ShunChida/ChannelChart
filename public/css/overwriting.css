@@ -1,0 +1,69 @@
+.btn {
+    border-radius: 25px;
+}
+
+.btn-small {
+    border-radius: 25px;
+}
+
+.btn-large {
+    border-radius: 100px;
+}
+
+.link-btn {
+    color: #000 !important;
+}
+
+.navbar-toggle {
+    z-index: 2;
+}
+
+.navbar-brand-center {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 5px;
+    text-align:center;
+    margin: auto;
+}
+
+@media (min-width: 768px) {
+    .navbar-brand-center {
+        margin-left: 0 !important;
+    }
+}
+
+.icon {
+    border-radius: 50%;
+}
+
+.dropdown-menu {
+    background-color: #343a40;
+}
+
+.dropdown-item {
+    color: #fff;
+}
+
+.dropdown-item:first-child {
+    border-top-left-radius: initial;
+    border-top-right-radius: initial;
+}
+
+.dropdown-item:last-child {
+    border-bottom-right-radius: initial;
+    border-bottom-left-radius: initial;
+}
+
+:root{
+    --font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+body {
+    font-family: var(--font-family-sans-serif);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-sans-serif);
+}
