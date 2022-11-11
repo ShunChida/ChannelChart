@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Token::class);
     }
+    
+    public function youtube_data()
+    {
+        return $this->hasOne(Content::class);
+    }
 }
