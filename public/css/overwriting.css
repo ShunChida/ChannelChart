@@ -14,6 +14,15 @@
     color: #000 !important;
 }
 
+.margin-standard {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.navbar {
+    padding: 0.5rem 0.5rem 0.1rem 0rem;
+}
+
 .navbar-toggle {
     z-index: 2;
 }
@@ -22,9 +31,13 @@
     position: absolute;
     width: 100%;
     left: 0;
-    top: 5px;
+    top: 3px;
     text-align:center;
     margin: auto;
+}
+
+.navbar-nav .nav-link {
+    padding-left: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -33,12 +46,18 @@
     }
 }
 
-.icon {
-    border-radius: 50%;
+@media (min-width: 576px) {
+    .navbar-expand-sm .navbar-nav .nav-link {
+        padding-right: 0.5rem;
+        padding-left: 1rem;
+        position: relative;
+        top: -2px;
+    }
 }
 
 .dropdown-menu {
     background-color: #343a40;
+    min-width: 16rem;
 }
 
 .dropdown-item {
@@ -54,6 +73,119 @@
     border-bottom-right-radius: initial;
     border-bottom-left-radius: initial;
 }
+
+.container {
+    max-width: 1300px;    
+}
+
+.channels {
+    border: 1px solid #bbb;
+    border-radius: 0.25rem;
+}
+
+.line {
+    font-size: 18px;
+    border-bottom: 1px solid #bbb;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.thumbnail img {
+    max-width: 100%;
+}
+
+.content {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.content a {
+    text-decoration: none;
+}
+
+.thumbnail {
+    display: block;
+    padding: 4px;
+    line-height: 1.72222;
+    background-color: #fff;
+    max-width: 100%;
+    color:#212529; 
+    border-radius:4px; 
+    box-shadow:0 0 4px rgba(0,0,0,0.4); 
+    margin-bottom:5px; 
+    margin-top:5px; 
+    border:0;
+}
+
+.thumbnail:hover {
+    box-shadow:0 0 4px rgba(0,0,0,1); 
+    color:#212529;
+}
+
+.title {
+    width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: 14px;
+    position: absolute;   
+    top: 50%;                
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    padding-left: 5px;
+}
+
+.icon {
+    border: 2px #bbb solid;
+}
+
+.icon:hover {
+    border: 2px #888 solid;
+}
+
+
+@media (max-width: 992px) {
+    .title {
+        font-size: 13px;
+    }
+}
+@media (max-width: 767.98px) {
+    .title {
+        font-size: 14px;
+    }
+}
+@media (max-width: 700px) {
+    .title {
+        font-size: 13px;
+    }
+}
+@media (max-width: 575px) {
+    .title {
+        font-size: 14px;
+    }
+}
+@media (max-width: 500px) {
+    .title {
+        font-size: 13px;
+    }
+}
+@media (max-width: 404px) {
+    .title {
+        font-size: 13px;
+    }
+}
+@media (max-width: 370px) {
+    .title {
+        font-size: 11px;
+    }
+}
+@media (max-width: 340px) {
+    .title {
+        font-size: 10px;
+    }
+}
+
 
 :root{
     --font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;

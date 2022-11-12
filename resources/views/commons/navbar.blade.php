@@ -18,7 +18,7 @@
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">+ 新規追加</a></li>
+                        <li><a class="dropdown-item" href="#">+ リスト作成</a></li>
                     </ul>
                 </li>
                 @endif

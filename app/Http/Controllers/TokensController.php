@@ -81,7 +81,7 @@ class TokensController extends Controller
         list($channels, $videos) = $this->set_content();
         
         } else {
-            if ($this->minutes_taken_after_update() >= 5) {
+            if ($this->minutes_taken_after_update() >= 100000) {
                 // 前回から5分以上経っていればAPI使用
                 list($channels, $videos) = $this->set_content();
             } else {
@@ -169,7 +169,8 @@ class TokensController extends Controller
             htmlspecialchars($e->getMessage()));
         }
         foreach ($subsResponse['items'] as $subsResult) {
-            $channels[] = $subsResult;
+            $channel_id = $subsResult['snippet']['resourceId']['channelId'];
+            $channels[$channel_id] = $subsResult;
         }
         return $channels;
     }
