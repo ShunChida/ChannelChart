@@ -3,7 +3,11 @@
 @section('content')
     @if (Auth::check())
         <div class="text-center">
+            @if (null == $channel_list)
             <h1>すべてのチャンネル</h1>
+            @else
+            <h1>{{ $channel_list->name }}</h1>
+            @endif
         </div>
         @include('channels.channels')
         @include('channels.videos')

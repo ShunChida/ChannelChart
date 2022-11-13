@@ -21,4 +21,9 @@ class Channel extends Model
     {
         return $this->hasMany(Video::class);
     }
+    
+    public function channel_lists()
+    {
+        return $this->belongsToMany(ChannelList::class, 'channel_selection', 'channel_id', 'channel_list_id')->withTimestamps();
+    }
 }

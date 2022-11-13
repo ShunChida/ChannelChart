@@ -15,10 +15,12 @@
                         リスト一覧
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="/">すべてのチャンネル</a></li>
+                        @foreach ($lists as $list)
+                        <li>{!! link_to_route('channels.show', $list->name, ['id' => $list->id], ['class' => 'dropdown-item']) !!}</li>
+                        @endforeach
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">+ リスト作成</a></li>
+                        <li>{!! link_to_route('lists.create', '＋ リスト作成', [], ['class' => 'dropdown-item']) !!}</li>
                     </ul>
                 </li>
                 @endif
@@ -28,7 +30,7 @@
                     {{-- アカウント情報ページへのリンク --}}
                     <li class="nav-item">{!! link_to_route('users.show', Auth::user()->name, ['user' => Auth::id()], ['class' => 'nav-link']) !!}</li>
                 @else
-                    {{-- ユーザ登録ページへのリンク --}}
+                    {{-- ユーザ登録ページへのリンク --}}・
                     <li class="nav-item">{!! link_to_route('signup.get', '登録', [], ['class' => 'nav-link']) !!}</li>
                     {{-- ログインページへのリンク --}}
                     <li class="nav-item">{!! link_to_route('login', 'ログイン', [], ['class' => 'nav-link']) !!}</li>

@@ -29,5 +29,9 @@ Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('channels/{id}', 'ChannelListsController@show')->name('channels.show');
+    
+    Route::resource('lists', 'ChannelSelectionController', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+    
     Route::resource('users', 'UsersController', ['only' => ['show', 'destroy']]);
 });

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\ChannelList;
+
 class ChannelListsController extends Controller
 {
     protected $data = [];
@@ -34,6 +36,28 @@ class ChannelListsController extends Controller
         echo ' エラー：認証に失敗';
     }
     
+    public function show($id)
+    {
+        // リスト内のチャンネル取得
+        $channel_list = ChannelList::findOrFail($id);
+        
+        $channels = $channel_list->channels()->get();
+        
+        $this->set_parameters();
+        
+        if (null !== $this->token) {
+            $this->client->setAccessToken($this->token['access_token']);
+            
+            $this->refresh();
+            $this->get_content($channels);
+            // ログイン後トップページ
+            $this->data['channel_list'] = $channel_list;
+            return view('welcome', $this->data);
+        }
+        
+        $this->auth_code();
+        echo ' エラー：認証に失敗';
+    }
     
     public function set_parameters()
     {
@@ -74,18 +98,22 @@ class ChannelListsController extends Controller
     }
     
     
-    public function get_content()
+    public function get_content($channels = null)
     {
         if (null == $this->user->channels) {
-        // APIよりデータ取得
-        $this->set_content();
+            // APIよりデータ取得
+            $this->set_content();
         
         } elseif ($this->minutes_taken_after_update() >= 100000) {
             // 前回から5分以上経っていればAPI使用
             $this->set_content();
         }
         
-        $channels = $this->user->channels()->get();
+        if (null == $channels) {
+            // トップページの場合
+            $channels = $this->user->channels()->get();
+        }
+        
         foreach ($channels as $channel) {
             $videos_of_channel = $channel->videos()->get();
             foreach ($videos_of_channel as $video_of_channel) {
@@ -98,6 +126,8 @@ class ChannelListsController extends Controller
         $this->data = [
             'channels' => $channels,
             'videos' => $videos,
+            'lists' => $this->user->channel_lists()->get(),
+            'channel_list' => null,
         ];
         
         return true;
@@ -110,13 +140,6 @@ class ChannelListsController extends Controller
         
         $this->set_channels($youtube);
         $this->set_videos($youtube);
-        
-        /*$this->user->content()->updateOrCreate(
-            ['user_id' => $this->user->id],
-            ['user_id' => $this->user->id,
-            'channels' => $channels,
-            'videos' => $videos,]
-        );*/
         
         return true;
     }
@@ -183,11 +206,6 @@ class ChannelListsController extends Controller
                 'channel' => $subsResult,
             ]);
             
-            
-            
-            /*
-            $channel_id = $subsResult['snippet']['resourceId']['channelId'];
-            $channels[$channel_id] = $subsResult;*/
         }
         return true;
     }
