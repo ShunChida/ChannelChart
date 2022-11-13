@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Content::class);
     }
+    
+    public function channel_lists()
+    {
+        return $this->hasMany(ChannelList::class);
+    }
 }
