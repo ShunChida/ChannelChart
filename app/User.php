@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(ChannelList::class);
     }
+    
+    public function channels()
+    {
+        return $this->hasMany(Channel::class);
+    }
+    
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }
