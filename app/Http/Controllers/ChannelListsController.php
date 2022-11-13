@@ -67,7 +67,7 @@ class ChannelListsController extends Controller
         require_once __DIR__.'/../../../vendor/autoload.php';
         
         $this->client = new \Google_Client();
-        $this->client->setAuthConfigFile(__DIR__.'/../../../client_secret_46891901420-ub4dbh00et1mpbsukkiptrrg6eoti8qr.apps.googleusercontent.com.json');
+        $this->client->setAuthConfigFile(__DIR__.'/../../../client_secret.json');
         $this->client->addScope('https://www.googleapis.com/auth/youtube');
         $this->client->setRedirectUri('https://' . $_SERVER['HTTP_HOST'] . '/');
         $this->client->setAccessType('offline');
@@ -113,6 +113,8 @@ class ChannelListsController extends Controller
             // トップページの場合
             $channels = $this->user->channels()->get();
         }
+        
+        $videos = null;
         
         foreach ($channels as $channel) {
             $videos_of_channel = $channel->videos()->get();
@@ -249,12 +251,14 @@ class ChannelListsController extends Controller
     
     public function sort_by_publishedAt($sort_order, $array) //投稿時間順に並べる
     {
-        foreach ($array as $key => $value) {
-            $standard_key_array[$key] = $value['video']['snippet']['publishedAt'];
+        if (null !== $array) {
+            foreach ($array as $key => $value) {
+                $standard_key_array[$key] = $value['video']['snippet']['publishedAt'];
+            }
+        
+            array_multisort($standard_key_array, $sort_order, $array);
+        
+            return $array;
         }
-    
-        array_multisort($standard_key_array, $sort_order, $array);
-    
-        return $array;
     }
 }

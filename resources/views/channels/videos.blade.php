@@ -14,6 +14,7 @@
                     $day_group = 0;
                 @endphp
                 
+                @if (null !== $videos)
                 @foreach ($videos as $video)
                 
                     @php
@@ -35,6 +36,7 @@
                     @include('channels.video')
                     
                 @endforeach
+                @endif
             </div>
         </div>
     </div>

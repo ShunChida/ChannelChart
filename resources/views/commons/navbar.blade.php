@@ -16,9 +16,11 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/">すべてのチャンネル</a></li>
+                        @if (null !== $lists)
                         @foreach ($lists as $list)
                         <li>{!! link_to_route('channels.show', $list->name, ['id' => $list->id], ['class' => 'dropdown-item']) !!}</li>
                         @endforeach
+                        @endif
                         <li><hr class="dropdown-divider"></li>
                         <li>{!! link_to_route('lists.create', '＋ リスト作成', [], ['class' => 'dropdown-item']) !!}</li>
                     </ul>
