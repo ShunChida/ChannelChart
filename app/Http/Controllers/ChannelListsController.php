@@ -100,7 +100,7 @@ class ChannelListsController extends Controller
     
     public function get_content($channels = null)
     {
-        if (null == $this->user->channels) {
+        if (null == $this->user->channels()->get()) {
             // APIよりデータ取得
             $this->set_content();
         
