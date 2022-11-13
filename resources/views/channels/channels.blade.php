@@ -5,9 +5,9 @@
         
             <div class="d-flex flex-wrap" style="margin-bottom:5px">
                 @foreach ($channels as $channel)
-                    <a href="http://www.youtube.com/channel/{{ $channel['snippet']['resourceId']['channelId'] }}">
+                    <a href="http://www.youtube.com/channel/{{ $channel['channel']['snippet']['resourceId']['channelId'] }}" target="_blank">
                         <div style="width:60px">
-                            <img class="rounded-circle img-fluid icon" src="{{ $channel['snippet']['thumbnails']['default']['url'] }}" />
+                            <img class="rounded-circle img-fluid icon" src="{{ $channel['channel']['snippet']['thumbnails']['default']['url'] }}" />
                         </div>
                     </a>
                 @endforeach

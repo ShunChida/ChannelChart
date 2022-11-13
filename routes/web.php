@@ -17,7 +17,7 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/', 'TokensController@index');
+Route::get('/', 'ChannelListsController@index');
 
 // ユーザ登録
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');

@@ -42,11 +42,6 @@ class User extends Authenticatable
         return $this->hasOne(Token::class);
     }
     
-    public function content()
-    {
-        return $this->hasOne(Content::class);
-    }
-    
     public function channel_lists()
     {
         return $this->hasMany(ChannelList::class);
@@ -55,10 +50,5 @@ class User extends Authenticatable
     public function channels()
     {
         return $this->hasMany(Channel::class);
-    }
-    
-    public function videos()
-    {
-        return $this->hasMany(Video::class);
     }
 }

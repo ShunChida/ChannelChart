@@ -17,7 +17,7 @@
                 @foreach ($videos as $video)
                 
                     @php
-                        $video_published_at = new \DateTime($video['snippet']['publishedAt']);
+                        $video_published_at = new \DateTime($video['video']['snippet']['publishedAt']);
                         $interval = $now->diff($video_published_at);
                         $interval_day = (int)$interval->format('%D');
                     @endphp

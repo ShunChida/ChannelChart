@@ -12,8 +12,8 @@ class Video extends Model
         'video' => 'json',
     ];    
         
-    public function user()
+    public function channel()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Channel::class);
     }
 }
