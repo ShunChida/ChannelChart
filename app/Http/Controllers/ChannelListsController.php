@@ -104,8 +104,8 @@ class ChannelListsController extends Controller
             // APIよりデータ取得
             $this->set_content();
         
-        } elseif ($this->minutes_taken_after_update() >= 100000) {
-            // 前回から5分以上経っていればAPI使用
+        } elseif ($this->minutes_taken_after_update() >= 720) {
+            // 前回から720分（半日）以上経っていればAPI使用
             $this->set_content();
         }
         
@@ -193,6 +193,7 @@ class ChannelListsController extends Controller
         try {
             $subsResponse = $youtube->subscriptions->listSubscriptions('snippet', array(
                 'mine' =>'true',   
+                'maxResults' => 50,
             ));
         } catch (Google_Service_Exception $e) {
             $htmlBody = sprintf('<p>A service error occurred: <code>%s</code></p>',
