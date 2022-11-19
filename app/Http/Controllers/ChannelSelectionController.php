@@ -33,7 +33,7 @@ class ChannelSelectionController extends Controller
             'name' => $request->name,
         ]);
         
-        $channel_list = ChannelList::where('name', $request->name)->firstOrFail();
+        $channel_list = \Auth::user()->channel_lists()->latest()->firstOrFail();
         
         foreach($request->selection as $id) {
             $channel_list->add($id);

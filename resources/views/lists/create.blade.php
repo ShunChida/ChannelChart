@@ -21,33 +21,36 @@
                 
                 <div class="container">
                     <div class="row form-group">
-                        @for ($i = 0; $i < count($channels); $i++)
-                        <div class="col-12 col-sm-12 col-md-6">
-                            <div class="row justify-content-center">
-                                <div class="col-6">
-                                    <div class="container">
+                        <div class="container">
+                            <div class="row">
+                                @for ($i = 0; $i < count($channels); $i++)
+                                    <div class="col-12 col-sm-6 col-md-4">
                                         <div class="row">
-                                            <div class="custom-control custom-checkbox custom-control-inline" style="margin-bottom: 20px;">
-                                                {{Form::checkbox('selection[]', $channels[$i]['id'], false, ['class'=>'custom-control-input', 'id' => $i])}}
-                                                <div style="width:60px">
-                                                    <img class="rounded-circle img-fluid" style="border: 2px #bbb solid;" src="{{ $channels[$i]['channel']['snippet']['thumbnails']['default']['url'] }}" />
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="custom-control custom-checkbox custom-control-inline" style="margin-bottom: 20px; align-items: center;">
+                                                        {{Form::checkbox('selection[]', $channels[$i]['id'], false, ['class'=>'custom-control-input', 'id' => $i])}}
+                                                        <div style="width:60px">
+                                                            <img class="rounded-circle img-fluid" style="border: 2px #bbb solid; margin-left: 65px;" src="{{ $channels[$i]['channel']['snippet']['thumbnails']['default']['url'] }}" />
+                                                        </div>
+                                                        {{Form::label($i, $channels[$i]['channel']['snippet']['title'], ['class'=>'custom-control-label', 'style'=>'cursor: pointer; padding-left: 70px;'])}}
+                                                   
+                                                    </div>
                                                 </div>
-                                                {{Form::label($i, $channels[$i]['channel']['snippet']['title'], ['class'=>'custom-control-label'])}}
-                                           
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endfor
                             </div>
                         </div>
-                        @endfor
                     </div>
                 </div>
                             
                 <div class="container">
                     <div class="row justify-content-center">
-                            
-                            {!! Form::submit('作成', ['class' => 'btn btn-primary']) !!}
+                        <div class="col-3">
+                            {!! Form::submit('作成', ['class' => 'btn btn-primary btn-block']) !!}
+                        </div>
                     </div>
                 </div>
                         

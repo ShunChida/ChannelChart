@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\ChannelList;
+use App\Channel;
 
 class ChannelListsController extends Controller
 {
@@ -187,7 +188,7 @@ class ChannelListsController extends Controller
     public function set_channels($youtube)
     {
         //一度削除
-        $this->user->channels()->delete();
+        //$this->user->channels()->delete();
         
         // 登録チャンネルの取得
         try {
@@ -203,13 +204,52 @@ class ChannelListsController extends Controller
             htmlspecialchars($e->getMessage()));
         }
         
-        foreach ($subsResponse['items'] as $subsResult) {
-            $this->user->channels()->create([
-                'user_id' => $this->user->id,
-                'channel' => $subsResult,
-            ]);
-            
+        // DBに保存しているチャンネルのIDを取得
+        $old_channel_ids_from_youtube = [];
+        foreach ($this->user->channels()->get() as $old_channel) {
+            $old_channel_ids_from_youtube[] = $old_channel['channel_id_from_youtube'];
         }
+        
+        $new_channel_ids_from_youtube = $this->update_or_create_channels($subsResponse);
+        
+        $this->delete_channels($old_channel_ids_from_youtube, $new_channel_ids_from_youtube);
+        
+        return true;
+    }
+    
+    
+    public function update_or_create_channels($subsResponse)
+    {
+        // 登録チャンネルに変更があれば追加、既にあれば更新
+        $new_channel_ids_from_youtube = [];
+        
+        foreach ($subsResponse['items'] as $subsResult) {
+            $channel_id_from_youtube = $subsResult['snippet']['resourceId']['channelId'];
+            
+            $this->user->channels()->updateOrCreate(
+                ['channel_id_from_youtube' => $channel_id_from_youtube],
+                ['user_id' => $this->user->id,
+                'channel' => $subsResult,
+                'channel_id_from_youtube' => $channel_id_from_youtube,]
+            );
+            
+            $new_channel_ids_from_youtube[] = $channel_id_from_youtube;
+        }
+        
+        return $new_channel_ids_from_youtube;
+    }
+    
+    
+    public function delete_channels($old_channel_ids_from_youtube, $new_channel_ids_from_youtube)
+    {
+        // 登録解除されているチャンネルを削除
+        $diff = array_diff($old_channel_ids_from_youtube, $new_channel_ids_from_youtube);
+        
+        foreach ($diff as $key => $delete_channel) {
+            $channel = $this->user->channels()->where('channel_id_from_youtube', $delete_channel)->firstOrFail();
+            $channel->delete();
+        }
+        
         return true;
     }
     
@@ -219,7 +259,9 @@ class ChannelListsController extends Controller
         // 登録チャンネルの動画取得
         
         $channels = $this->user->channels()->get();
-        
+        foreach ($channels as $channel) {
+            $channel->videos()->delete();
+        }
         
         foreach ($channels as $channel) {
             $params['channelId'] = $channel['channel']['snippet']['resourceId']['channelId'];

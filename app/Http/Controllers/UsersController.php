@@ -15,7 +15,7 @@ class UsersController extends Controller
         
         return view('users.show', [
             'user' => $user,
-            'lists' => null,
+            'lists' => $user->channel_lists()->get(),
         ]);
     }
     

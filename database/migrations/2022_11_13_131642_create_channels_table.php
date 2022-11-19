@@ -16,6 +16,7 @@ class CreateChannelsTable extends Migration
         Schema::create('channels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->string('channel_id_from_youtube', 30);
             $table->json('channel');
             $table->timestamps();
             

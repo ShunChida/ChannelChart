@@ -20,7 +20,7 @@
                     <div class="row">
                         
                         <div class="col-3 col-sm-3 col-md-3" style="padding:0;">
-                            <div class="row no-gutters justify-content-between" style="height: 60px;overflow: hidden;">
+                            <div class="row no-gutters justify-content-between" style="height: 60px;overflow: hidden; align-items: center;">
                                 <div style="width:60px;text-align: center; margin-left:5px">
                                     <img class="rounded-circle border border-4 img-fluid icon" src="{{ $its_channel_icon }}">
                                 </div>

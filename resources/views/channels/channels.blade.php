@@ -11,7 +11,7 @@
                 @if (null !== $channel_list)
                 <div class="col">
                     {!! Form::model($channel_list, ['route' => ['lists.destroy', $channel_list->id], 'method' => 'delete']) !!}
-                        {!! Form::submit('削除', ['class' => 'btn btn-danger float-right']) !!}
+                        {!! Form::submit('削除', ['class' => 'btn btn-danger float-right', 'style' => 'transform: translate(18px, 10px);']) !!}
                     {!! Form::close() !!}
                 </div>
                 @endif
