@@ -10,4 +10,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-client_secret.json
+/etc/secrets/client_secret.json

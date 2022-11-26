@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\ChannelList;
 use App\Channel;
@@ -68,7 +69,7 @@ class ChannelListsController extends Controller
         require_once __DIR__.'/../../../vendor/autoload.php';
         
         $this->client = new \Google_Client();
-        $this->client->setAuthConfigFile(__DIR__.'/../../../client_secret.json');
+        $this->client->setAuthConfigFile(__DIR__.'/../../../etc/secrets/client_secret.json');
         $this->client->addScope('https://www.googleapis.com/auth/youtube');
         $this->client->setRedirectUri('https://' . $_SERVER['HTTP_HOST'] . '/');
         $this->client->setAccessType('offline');
