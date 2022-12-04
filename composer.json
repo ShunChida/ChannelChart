@@ -11,19 +11,19 @@
         "php": "^7.2.5",
         "fideloper/proxy": "^4.4",
         "google/apiclient": "^2.0",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "6.*",
         "symfony/polyfill-ctype": "1.22.0",
         "symfony/polyfill-iconv": "1.22.0",
         "symfony/polyfill-mbstring": "1.22.0",
-        "laravel/ui": "2.0"
+        "laravel/ui": "3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^4.1",
+        "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^8.5.8|^9.3.3"
     },
     "config": {
