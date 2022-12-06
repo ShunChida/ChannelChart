@@ -29,3 +29,6 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('users', 'UsersController', ['only' => ['show', 'destroy']]);
 });
+#Auth::routes();
+
+#Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
