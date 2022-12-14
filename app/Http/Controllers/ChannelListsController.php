@@ -68,8 +68,14 @@ class ChannelListsController extends Controller
         
         require_once __DIR__.'/../../../vendor/autoload.php';
         
+        $client_id = env('CLIENT_ID');
+        $client_secret = env('CLIENT_SECRET');
+        
         $this->client = new \Google_Client();
-        $this->client->setAuthConfigFile(__DIR__.'/../../../etc/secrets/client_secret.json');
+        $this->client->setAuthConfig([
+            'client_id' => $client_id,
+            'client_secret' => $client_secret,
+        ]);
         $this->client->addScope('https://www.googleapis.com/auth/youtube');
         $this->client->setRedirectUri('https://' . $_SERVER['HTTP_HOST'] . '/');
         $this->client->setAccessType('offline');
