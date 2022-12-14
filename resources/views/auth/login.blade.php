@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @csrf
+    
     <div class="text-center">
         <h1>ログイン</h1>
     </div>
@@ -10,6 +10,7 @@
         <div class="col-sm-6 offset-sm-3">
 
             {!! Form::open(['route' => 'login.post']) !!}
+                @csrf
                 <div class="form-group">
                     {!! Form::label('email', 'メールアドレス') !!}
                     {!! Form::email('email', null, ['class' => 'form-control']) !!}
