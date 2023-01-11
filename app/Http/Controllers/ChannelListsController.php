@@ -178,7 +178,7 @@ class ChannelListsController extends Controller
         $access_token = $this->client->getAccessToken();
     
         if (null == $this->client->getRefreshToken()) {
-            $refresh_token_exists = 0;
+            $refresh_token_exists = null;
         } else {
             $refresh_token_exists = 1;
         }
