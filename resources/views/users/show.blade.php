@@ -16,16 +16,15 @@
             
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-warning btn-block" style="margin-bottom: 30px;">{!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'text-white text-decoration-none']) !!}</button>
+                    <div class="col-8 col-sm-7 col-md-6">
+                        {!! Form::open(['route' => 'logout.get', 'method' => 'get']) !!}
+                            {!! Form::submit('ログアウト', ['class' => "btn btn-warning btn-block text-white", 'style' => "margin-bottom: 30px;"]) !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
-            </div>
             
-            
-            <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-6">
+                    <div class="col-8 col-sm-7 col-md-6">
                         {{-- ポップアップ実装予定 --}}
                         {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
                             {!! Form::submit('アカウントの削除', ['class' => "btn btn-danger btn-block"]) !!}

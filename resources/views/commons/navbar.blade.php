@@ -3,7 +3,7 @@
         {{-- トップページへのリンク --}}
         <a class="navbar-brand navbar-brand-center mx-auto" style="font-size: 18pt;" href="/">ChannelChart</a>
 
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar" style="z-index:1">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar" style="z-index:1; margin: 0 0 2px 5px; transform: translate(0px, -2px);">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -18,7 +18,7 @@
                         <li><a class="dropdown-item" href="/">すべてのチャンネル</a></li>
                         @if (null !== $lists)
                         @foreach ($lists as $list)
-                        <li>{!! link_to_route('channels.show', $list->name, ['id' => $list->id], ['class' => 'dropdown-item']) !!}</li>
+                        <li>{!! link_to_route('channels.show', '・'.$list->name, ['id' => $list->id], ['class' => 'dropdown-item']) !!}</li>
                         @endforeach
                         @endif
                         <li><hr class="dropdown-divider"></li>
